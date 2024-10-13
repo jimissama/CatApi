@@ -12,13 +12,13 @@ public class CatTagService : ICatTagService
     {
         _catTagRepo = serviceProvider.GetRequiredService<ICatTagRepo>();
     }
-    public async Task StoreTags(IEnumerable<CatTagEntity> cattags, CatDbContext context)
+    public async Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags, CatDbContext context)
     {
-        await _catTagRepo.StoreTags(cattags, context);
+        await _catTagRepo.StoreTagsAsync(cattags, context);
     }
 
-    public async Task StoreTags(IEnumerable<CatTagEntity> cattags)
+    public async Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags)
     {
-        await _catTagRepo.StoreTags(cattags);
+        await _catTagRepo.StoreTagsAsync(cattags);
     }
 }

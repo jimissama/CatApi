@@ -12,7 +12,7 @@ public class HttpRequestService : IHttpRequestService
     {
         _httpClient = httpClient;
     }
-    public async Task<string> HttpGet(Dictionary<string, string> DefaultHeaders, string url)
+    public async Task<string> HttpGetAsync(Dictionary<string, string> DefaultHeaders, string url)
     {
         try
         {

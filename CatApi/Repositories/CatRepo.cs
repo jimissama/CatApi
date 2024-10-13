@@ -12,7 +12,7 @@ public class CatRepo : ICatRepo
     {
         _serviceProvider = serviceProvider;
     }
-    public async Task StoreCats(IEnumerable<CatEntity> catEntities)
+    public async Task StoreCatsAsync(IEnumerable<CatEntity> catEntities)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -23,12 +23,12 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task StoreCats(IEnumerable<CatEntity> catEntities, CatDbContext context)
+    public async Task StoreCatsAsync(IEnumerable<CatEntity> catEntities, CatDbContext context)
     {
         await context.Cats.AddRangeAsync(catEntities);
     }
 
-    public async Task<CatEntity?> GetCatById(int id)
+    public async Task<CatEntity?> GetCatByIdAsync(int id)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -42,7 +42,7 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task<List<CatEntity>> GetCats(string? tag, int page, int pageSize)
+    public async Task<List<CatEntity>> GetCatsAsync(string? tag, int page, int pageSize)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -63,7 +63,7 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task<IEnumerable<CatEntity>> GetExistingCats(IEnumerable<CatEntity> cats)
+    public async Task<IEnumerable<CatEntity>> GetExistingCatsAsync(IEnumerable<CatEntity> cats)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -78,7 +78,7 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task<IEnumerable<CatEntity>> GetExistingCats(IEnumerable<CatEntity> cats, CatDbContext context)
+    public async Task<IEnumerable<CatEntity>> GetExistingCatsAsync(IEnumerable<CatEntity> cats, CatDbContext context)
     {
         return await context.Cats
                                  .Include(c => c.CatTags)
@@ -88,7 +88,7 @@ public class CatRepo : ICatRepo
                                  .ToListAsync();
     }
 
-    public async Task<HashSet<string>> GetExistingCatIds(IEnumerable<CatEntity> cats)
+    public async Task<HashSet<string>> GetExistingCatIdsAsync(IEnumerable<CatEntity> cats)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -102,7 +102,7 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task<HashSet<string>> GetExistingCatIds(IEnumerable<CatEntity> cats, CatDbContext context)
+    public async Task<HashSet<string>> GetExistingCatIdsAsync(IEnumerable<CatEntity> cats, CatDbContext context)
     {
         return new HashSet<string>(await context.Cats.Where(c => cats.Select(t => t.CatId)
                                                      .Contains(c.CatId))
@@ -110,7 +110,7 @@ public class CatRepo : ICatRepo
                                                      .ToListAsync());
     }
 
-    public async Task<HashSet<string>> GetExistingCatIds(IEnumerable<string> catIds)
+    public async Task<HashSet<string>> GetExistingCatIdsAsync(IEnumerable<string> catIds)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -124,7 +124,7 @@ public class CatRepo : ICatRepo
         }
     }
 
-    public async Task<HashSet<string>> GetExistingCatIds(IEnumerable<string> catIds, CatDbContext context)
+    public async Task<HashSet<string>> GetExistingCatIdsAsync(IEnumerable<string> catIds, CatDbContext context)
     {
         return new HashSet<string>(await context.Cats.Where(c => catIds
                                                      .Contains(c.CatId))

@@ -15,33 +15,33 @@ public class TagService : ITagService
         _tagRepo = serviceProvider.GetRequiredService<ITagRepo>();
     }
 
-    public async Task<HashSet<string>> GetExistingTagNames(IEnumerable<TagEntity> tags)
+    public async Task<HashSet<string>> GetExistingTagNamesAsync(IEnumerable<TagEntity> tags)
     {
-        return await _tagRepo.GetExistingTagNames(tags);
+        return await _tagRepo.GetExistingTagNamesAsync(tags);
     }
 
-    public async Task<HashSet<string>> GetExistingTagNames(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task<HashSet<string>> GetExistingTagNamesAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
-        return await _tagRepo.GetExistingTagNames(tags, context);
+        return await _tagRepo.GetExistingTagNamesAsync(tags, context);
     }
 
-    public async Task<IEnumerable<TagEntity>> GetExistingTags(IEnumerable<TagEntity> tags)
+    public async Task<IEnumerable<TagEntity>> GetExistingTagsAsync(IEnumerable<TagEntity> tags)
     {
-        return await _tagRepo.GetExistingTags(tags);
+        return await _tagRepo.GetExistingTagsAsync(tags);
     }
 
-    public async Task<IEnumerable<TagEntity>> GetExistingTags(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task<IEnumerable<TagEntity>> GetExistingTagsAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
-        return await _tagRepo.GetExistingTags(tags, context);
+        return await _tagRepo.GetExistingTagsAsync(tags, context);
     }
 
-    public async Task StoreTags(IEnumerable<TagEntity> tags)
+    public async Task StoreTagsAsync(IEnumerable<TagEntity> tags)
     {
-        await _tagRepo.StoreTags(tags);
+        await _tagRepo.StoreTagsAsync(tags);
     }
 
-    public async Task StoreTags(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task StoreTagsAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
-        await _tagRepo.StoreTags(tags, context);
+        await _tagRepo.StoreTagsAsync(tags, context);
     }
 }

@@ -14,7 +14,7 @@ public class TagRepo : ITagRepo
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<IEnumerable<TagEntity>> GetExistingTags(IEnumerable<TagEntity> tags)
+    public async Task<IEnumerable<TagEntity>> GetExistingTagsAsync(IEnumerable<TagEntity> tags)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -27,14 +27,14 @@ public class TagRepo : ITagRepo
         }
     }
 
-    public async Task<IEnumerable<TagEntity>> GetExistingTags(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task<IEnumerable<TagEntity>> GetExistingTagsAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
         return await context.Tags.Where(tag => tags.Select(t => t.Name)
                                  .Contains(tag.Name))
                                  .ToListAsync();    
     }
 
-    public async Task<HashSet<string>> GetExistingTagNames(IEnumerable<TagEntity> tags)
+    public async Task<HashSet<string>> GetExistingTagNamesAsync(IEnumerable<TagEntity> tags)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -49,7 +49,7 @@ public class TagRepo : ITagRepo
         }
     }
 
-    public async Task<HashSet<string>> GetExistingTagNames(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task<HashSet<string>> GetExistingTagNamesAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
             return new HashSet<string>(await context.Tags
                                      .Where(tag => tags.Select(t => t.Name)
@@ -58,7 +58,7 @@ public class TagRepo : ITagRepo
                                      .ToListAsync());   
     }
 
-    public async Task StoreTags(IEnumerable<TagEntity> tags)
+    public async Task StoreTagsAsync(IEnumerable<TagEntity> tags)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -70,7 +70,7 @@ public class TagRepo : ITagRepo
 
     }
 
-    public async Task StoreTags(IEnumerable<TagEntity> tags, CatDbContext context)
+    public async Task StoreTagsAsync(IEnumerable<TagEntity> tags, CatDbContext context)
     {
         await context.Tags.AddRangeAsync(tags);
     }

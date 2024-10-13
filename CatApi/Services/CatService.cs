@@ -45,7 +45,7 @@ public class CatService : ICatService
         if (string.IsNullOrEmpty(catApiKey))
             throw new Exception(_resourceManager.GetString("CatApiKeyNotFound"));
 
-        var httpStringResponse = await _httpRequestService.HttpGet(new Dictionary<string, string> { { "x-api-key", catApiKey } },
+        var httpStringResponse = await _httpRequestService.HttpGetAsync(new Dictionary<string, string> { { "x-api-key", catApiKey } },
                                                                    _configuration.GetSection("CatApiSettings:CatApiUrl")?.Value ?? string.Empty);
 
         var cats = GetCatSourceFromResponse(httpStringResponse);
@@ -61,17 +61,17 @@ public class CatService : ICatService
             var catTagData = await GetCatTagData(cats, context);
 
 
-            await _catRepo.StoreCats(catTagData.NewCats, context);
+            await _catRepo.StoreCatsAsync(catTagData.NewCats, context);
 
-            await _tagService.StoreTags(catTagData.NewTags, context);
+            await _tagService.StoreTagsAsync(catTagData.NewTags, context);
 
 
             await context.SaveChangesAsync();
 
 
-            var allCats = await _catRepo.GetExistingCats(catTagData.NewCats.ToList(), context);
+            var allCats = await _catRepo.GetExistingCatsAsync(catTagData.NewCats.ToList(), context);
 
-            var allTags = await _tagService.GetExistingTags(catTagData.NewCatsAllTags, context);
+            var allTags = await _tagService.GetExistingTagsAsync(catTagData.NewCatsAllTags, context);
 
             var catTagMappings = catTagData.NewCatTagsDict.SelectMany(ct => ct.Value.Select(val =>
             {
@@ -81,7 +81,7 @@ public class CatService : ICatService
 
             }));
 
-            await _catTagService.StoreTags(catTagMappings, context);
+            await _catTagService.StoreTagsAsync(catTagMappings, context);
 
             await context.SaveChangesAsync();
 
@@ -98,7 +98,7 @@ public class CatService : ICatService
                         IEnumerable<string>> NewCatTagsDict)> GetCatTagData(IEnumerable<CatSourceResponse> cats,
                                                                             CatDbContext context)
     {
-        var existingCatIds = await _catRepo.GetExistingCatIds(cats.Select(c => c.Id).ToList(), context);
+        var existingCatIds = await _catRepo.GetExistingCatIdsAsync(cats.Select(c => c.Id).ToList(), context);
 
         var newCats = _mapper.Map<IEnumerable<CatEntity>>(existingCatIds is null ? cats : cats.Where(c => !existingCatIds.Contains(c.Id, new StringEqualityExtension()))); //Map from CatApiDto to CatEntity only for not existing cat records
 
@@ -111,7 +111,7 @@ public class CatService : ICatService
         // all tags of the new Cats
         var tags = newCatTagsDict.GetTagEntities();
 
-        var existingTagNames = await _tagService.GetExistingTagNames(tags, context);
+        var existingTagNames = await _tagService.GetExistingTagNamesAsync(tags, context);
 
         // new tags
         var newTags = tags.Where(tag => !existingTagNames.Contains(tag.Name, new StringEqualityExtension())).ToList();
@@ -132,9 +132,9 @@ public class CatService : ICatService
         }
     }
 
-    public async Task<List<CatResponse>> GetCats(string? tag, int page, int pageSize)
+    public async Task<List<CatResponse>> GetCatsAsync(string? tag, int page, int pageSize)
     {
-        var cats = await _catRepo.GetCats(tag, page, pageSize);
+        var cats = await _catRepo.GetCatsAsync(tag, page, pageSize);
 
         if (cats is null || cats.Count == 0)
             return new List<CatResponse>();
@@ -142,9 +142,9 @@ public class CatService : ICatService
         return _mapper.Map<List<CatResponse>>(cats);
     }
 
-    public async Task<CatResponse?> GetCatById(int id)
+    public async Task<CatResponse?> GetCatByIdAsync(int id)
     {
-        var cat = await _catRepo.GetCatById(id);
+        var cat = await _catRepo.GetCatByIdAsync(id);
 
         if (cat is null)
             return null;

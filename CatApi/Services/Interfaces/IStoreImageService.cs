@@ -4,7 +4,7 @@ namespace CatApi.Services.Interfaces;
 
 public interface IStoreImageService
 {
-    public Task<byte[]?> GetCatImageFromUrl(string url);
+    public Task<byte[]?> GetCatImageFromUrlAsync(string url);
 
-    public Task StoreCatImage(CatEntity cat, string url);
+    public Task StoreCatImageAsync(CatEntity cat, string url);
 }

@@ -89,7 +89,7 @@ public class CatsController : ControllerBase
         {
             _catControllerValidation.GetCatByIdInvalidId(id);
 
-            var result = await _catService.GetCatById(id);
+            var result = await _catService.GetCatByIdAsync(id);
 
             _catControllerValidation.GetCatByIdNull(result);
 
@@ -131,7 +131,7 @@ public class CatsController : ControllerBase
         {
             _catControllerValidation.GetCatsInvalidPageAndPageSize(page, pageSize);
 
-            return Ok(await _catService.GetCats(tag, page, pageSize));
+            return Ok(await _catService.GetCatsAsync(tag, page, pageSize));
         }
         catch (HttpRequestException e)
         {

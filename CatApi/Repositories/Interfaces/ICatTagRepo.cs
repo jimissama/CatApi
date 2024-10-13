@@ -5,6 +5,6 @@ namespace CatApi.Repositories.Interfaces;
 
 public interface ICatTagRepo
 {
-    public Task StoreTags(IEnumerable<CatTagEntity> cattags, CatDbContext context);
-    public Task StoreTags(IEnumerable<CatTagEntity> cattags);
+    public Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags, CatDbContext context);
+    public Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags);
 }

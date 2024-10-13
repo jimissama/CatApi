@@ -12,7 +12,7 @@ public class CatTagRepo : ICatTagRepo
         _serviceProvider = serviceProvider;
     }
 
-    public async Task StoreTags(IEnumerable<CatTagEntity> cattags)
+    public async Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -24,7 +24,7 @@ public class CatTagRepo : ICatTagRepo
 
     }
 
-    public async Task StoreTags(IEnumerable<CatTagEntity> cattags, CatDbContext context)
+    public async Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags, CatDbContext context)
     {
         await context.CatTag.AddRangeAsync(cattags);
     }

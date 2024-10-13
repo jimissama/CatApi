@@ -19,7 +19,7 @@ public class StoreImageService : IStoreImageService
     }
 
 
-    public async Task<byte[]?> GetCatImageFromUrl(string url)
+    public async Task<byte[]?> GetCatImageFromUrlAsync(string url)
     {
         try
         {
@@ -32,7 +32,7 @@ public class StoreImageService : IStoreImageService
         }
     }
 
-    public async Task StoreCatImage(CatEntity cat, string url)
+    public async Task StoreCatImageAsync(CatEntity cat, string url)
     {
         //cat.Image = await GetCatImageFromUrl(url);
     }

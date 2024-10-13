@@ -83,7 +83,7 @@ public class CatServiceTests
     public async Task FetchCatsAsync_ShouldThrowException_WhenResponseIsNull()
     {
         _mockConfiguration.Setup(c => c.GetSection("CatApiSettings:CatApiKey").Value).Returns("valid-api-key");
-        _mockHttpRequestService.Setup(h => h.HttpGet(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>())).ReturnsAsync(string.Empty);
+        _mockHttpRequestService.Setup(h => h.HttpGetAsync(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>())).ReturnsAsync(string.Empty);
         _mockResourceManager.Setup(r => r.GetString("CatNotFetched")).Returns("Cats not fetched");
 
         var exception = await Assert.ThrowsAsync<Exception>(() => _catService.FetchCatsAsync());
@@ -99,16 +99,16 @@ public class CatServiceTests
 
         _mockConfiguration.Setup(c => c.GetSection("CatApiSettings:CatApiKey").Value).Returns(catApiKey);
         _mockConfiguration.Setup(c => c.GetSection("CatApiSettings:CatApiUrl").Value).Returns(catApiUrl);
-        _mockHttpRequestService.Setup(h => h.HttpGet(It.IsAny<Dictionary<string, string>>(), catApiUrl)).ReturnsAsync(httpResponse);
+        _mockHttpRequestService.Setup(h => h.HttpGetAsync(It.IsAny<Dictionary<string, string>>(), catApiUrl)).ReturnsAsync(httpResponse);
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(IServiceScopeFactory))).Returns(_mockServiceScopeFactory.Object);
         _mockServiceScopeFactory.Setup(sf => sf.CreateScope()).Returns(_mockServiceScope.Object);
         _mockServiceScope.Setup(s => s.ServiceProvider).Returns(_mockServiceProvider.Object);
         _mockServiceProvider.Setup(sp => sp.GetService(typeof(CatDbContext))).Returns(_mockCatDbContext.Object);
 
         var cats = new List<CatEntity> { new CatEntity { CatId = "1", Image = "https://test.com/1.jpg" } };
-        _mockCatRepo.Setup(r => r.StoreCats(It.IsAny<IEnumerable<CatEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
-        _mockTagService.Setup(t => t.StoreTags(It.IsAny<IEnumerable<TagEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
-        _mockCatTagService.Setup(ct => ct.StoreTags(It.IsAny<IEnumerable<CatTagEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
+        _mockCatRepo.Setup(r => r.StoreCatsAsync(It.IsAny<IEnumerable<CatEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
+        _mockTagService.Setup(t => t.StoreTagsAsync(It.IsAny<IEnumerable<TagEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
+        _mockCatTagService.Setup(ct => ct.StoreTagsAsync(It.IsAny<IEnumerable<CatTagEntity>>(), It.IsAny<CatDbContext>())).Returns(Task.CompletedTask);
 
         var result = await _catService.FetchCatsAsync();
 

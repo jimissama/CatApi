@@ -5,6 +5,6 @@ namespace CatApi.Services.Interfaces;
 
 public interface ICatTagService
 {
-    public Task StoreTags(IEnumerable<CatTagEntity> cattags, CatDbContext context);
-    public Task StoreTags(IEnumerable<CatTagEntity> cattags);
+    public Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags, CatDbContext context);
+    public Task StoreTagsAsync(IEnumerable<CatTagEntity> cattags);
 }
