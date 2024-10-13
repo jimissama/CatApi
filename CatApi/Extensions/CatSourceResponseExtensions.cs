@@ -6,7 +6,7 @@ namespace CatApi.Extensions;
 
 public static class CatSourceResponseExtensions
 {
-    public static Dictionary<string, IEnumerable<string>> GetCatTagsDictionary(this IEnumerable<CatSourceResponse> catSourceResponses, HashSet<string> existingCatIds)
+    public static Dictionary<string, IEnumerable<string>> GetCatTagsDictionary(this IEnumerable<CatSourceResponse> catSourceResponses, HashSet<string>? existingCatIds)
     {
         if(existingCatIds is null)
             return new Dictionary<string, IEnumerable<string>>();
