@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="IdGreaterZero" xml:space="preserve">
+    <value>Id must be integer greater than 0.</value>
+  </data>
+  <data name="PageAndPageSizeGreaterZero" xml:space="preserve">
+    <value>Page and PageSize must be integers greater than 0.</value>
+  </data>
+  <data name="CatNotFound" xml:space="preserve">
+    <value>Cat Image record not found.</value>
+  </data>
+    <data name="CatNotFetched" xml:space="preserve">
+    <value>Cats not fetched!</value>
+  </data>
+  <data name="CatNotStored" xml:space="preserve">
+    <value>Cats not stored!</value>
+  </data>
+  <data name="SourceNotValid" xml:space="preserve">
+    <value>Source response not valid.</value>
+  </data>
+  <data name="CatApiKeyNotFound" xml:space="preserve">
+    <value>Cat Api key not found!</value>
+  </data>  
+  <data name="StoredCatsCount" xml:space="preserve">
+    <value>Stored {0}/25 new Cat Images</value>
+  </data>  
+</root>
