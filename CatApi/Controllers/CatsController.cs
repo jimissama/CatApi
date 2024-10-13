@@ -45,7 +45,7 @@ public class CatsController : ControllerBase
     {
         try
         {
-            var newCatsCount = await _catService.FetchCats();
+            var newCatsCount = await _catService.FetchCatsAsync();
 
             StringBuilder strBuilder = new StringBuilder();
 
