@@ -36,7 +36,7 @@ public class CatService : ICatService
         _resourceManager = resourceManager;
     }
 
-    public async Task<int> FetchCats()
+    public async Task<int> FetchCatsAsync()
     {
         int fetchCount = 0;
 
@@ -46,7 +46,7 @@ public class CatService : ICatService
             throw new Exception(_resourceManager.GetString("CatApiKeyNotFound"));
 
         var httpStringResponse = await _httpRequestService.HttpGet(new Dictionary<string, string> { { "x-api-key", catApiKey } },
-                                                                   _configuration.GetSection("CatApiSettings:CatApiUrl").Value ?? string.Empty);
+                                                                   _configuration.GetSection("CatApiSettings:CatApiUrl")?.Value ?? string.Empty);
 
         var cats = GetCatSourceFromResponse(httpStringResponse);
 
@@ -100,7 +100,7 @@ public class CatService : ICatService
     {
         var existingCatIds = await _catRepo.GetExistingCatIds(cats.Select(c => c.Id).ToList(), context);
 
-        var newCats = _mapper.Map<IEnumerable<CatEntity>>(cats.Where(c => !existingCatIds.Contains(c.Id, new StringEqualityExtension()))); //Map from CatApiDto to CatEntity only for not existing cat records
+        var newCats = _mapper.Map<IEnumerable<CatEntity>>(existingCatIds is null ? cats : cats.Where(c => !existingCatIds.Contains(c.Id, new StringEqualityExtension()))); //Map from CatApiDto to CatEntity only for not existing cat records
 
         if (newCats is null)
             throw new Exception(_resourceManager.GetString("CatNotStored"));
