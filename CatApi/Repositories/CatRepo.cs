@@ -51,6 +51,7 @@ public class CatRepo : ICatRepo
             var query = context.Cats.AsNoTracking()
                                     .Include(c => c.CatTags)
                                     .ThenInclude(t => t.Tag)
+                                    .Where(cat => cat.CatTags.Any(catTag => catTag.Tag.Name == tag))
                                     .Skip((page - 1) * pageSize)
                                     .Take(pageSize)
                                     .AsQueryable();
